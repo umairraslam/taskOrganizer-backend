@@ -38,7 +38,7 @@ module.exports = {
     async updateTask(req, res) {
         try {
             let response = await Task.update({ _id: req.params.id }, req.payload);
-            return response;
+            return {object:response, message:"Task has ben updated successfully!"};
         } catch (err) {
             console.log(err);
             throw new Error(err);
@@ -47,7 +47,7 @@ module.exports = {
     async deleteTask(req, res) {
         try {
             let response = await Task.find({ _id: req.params.id }).remove();
-            return response;
+            return {message:"Task has ben deleted successfully!"};
         } catch (err) {
             console.log(err);
             throw new Error(err);

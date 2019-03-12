@@ -79,7 +79,7 @@ module.exports = [
                     end: Joi.string(),
                     desc: Joi.string(),
                     title: Joi.string(),
-                    allDay: Joi.string(),
+                    allDay: Joi.bool(),
                     userId: Joi.string()
                 }),
                 params: Joi.object({
