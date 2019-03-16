@@ -72,5 +72,28 @@ module.exports = [
                 })
             }
         }
+    },
+    {
+        method: 'PUT',
+        path: '/user/edit/{id}',
+        handler: authController.editProfile,
+        config: {
+            description: 'Edit Profile',
+            notes: 'Edit Profile',
+            tags: ['api'],
+            auth: false,
+            validate: {
+                payload: Joi.object({
+                    firstName: Joi.string().required(),
+                    lastName: Joi.string().required(),
+                    role: Joi.string().required(),
+                    email: Joi.string().required(),
+                    dob: Joi.string().required()
+                }),
+                params: Joi.object({
+                    id: Joi.string().required()
+                })
+            }
+        }
     }
 ]
