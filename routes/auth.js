@@ -75,6 +75,27 @@ module.exports = [
     },
     {
         method: 'PUT',
+        path: '/user/resetPassword/internal',
+        handler: authController.resetPasswordInternal,
+        config: {
+            description: 'Reset password from User Profile',
+            notes: 'Reset password from User Profile',
+            tags: ['api'],
+            auth: 'jwt',
+            validate: {
+                headers: Joi.object({
+                    'authorization': Joi.string().required()
+                }).options({ allowUnknown: true }),
+                payload: Joi.object({
+                    id: Joi.string().required(),
+                    oldPassword: Joi.string().required(),
+                    password: Joi.string().required()
+                })
+            }
+        }
+    },
+    {
+        method: 'PUT',
         path: '/user/edit/{id}',
         handler: authController.editProfile,
         config: {

@@ -34,7 +34,7 @@ module.exports = {
             let hash = await bcrypt.hash(req.payload.password, SALT_ROUNDS);
             user.password = hash;
             let response = await user.save();
-            return response;
+            return res.response({message: "You have signed up successfully!"}).code(200);
         } catch (err) {
             console.log(err);
             throw new Error(err);
@@ -136,6 +136,38 @@ module.exports = {
                 let response = await User.update({ _id: user._id }, payload);
                 return res.response({message: "Token expired"}).code(500);
             }
+        } catch(err){
+            console.log(err);
+            throw new Error(err);
+        }
+    },
+    async resetPasswordInternal(req, res) {
+        try{
+            if (!util.isPasswordStrong(req.payload.password)) {
+                return res.response({message: "Weak password"}).code(500);
+            }
+
+            let user = await User.findOne({_id: req.payload.id});
+
+            console.log(user)
+
+            if(!user){
+                return res.response({message: "User not found!"}).code(404);
+            }
+            
+            let havePasswordsMatched = await bcrypt.compare(req.payload.oldPassword, user.password);
+            console.log(havePasswordsMatched)
+            if(havePasswordsMatched){
+                let hash = await bcrypt.hash(req.payload.password, SALT_ROUNDS);
+                let payload = {
+                    password: hash
+                };
+                let response = await User.update({ _id: user._id }, payload);
+                return res.response({message: "Password changed"}).code(200);
+            }else{
+                return res.response({message: "The old password is incorrect"}).code(500);
+            }
+                
         } catch(err){
             console.log(err);
             throw new Error(err);

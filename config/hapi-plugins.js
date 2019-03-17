@@ -2,6 +2,7 @@ const HapiSwagger = require('hapi-swagger');
 const Pack = require('../package');
 const Inert = require('inert');
 const Vision = require('vision');
+const HapiJWTAuth = require('hapi-auth-jwt2');
 
 let swaggerOptions = {
     host: process.env.SWAGGER_URL?process.env.SWAGGER_URL:"localhost:8000",
@@ -18,5 +19,6 @@ module.exports = [
     {
         plugin: HapiSwagger,
         options: swaggerOptions
-    }
+    },
+    HapiJWTAuth
 ]

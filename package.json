@@ -23,6 +23,7 @@
     "crypto-random-string": "^1.0.0",
     "dotenv": "^6.2.0",
     "hapi": "^18.1.0",
+    "hapi-auth-jwt2": "^8.3.0",
     "hapi-swagger": "^9.3.1",
     "inert": "^5.1.2",
     "joi": "^14.3.1",

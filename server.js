@@ -1,6 +1,24 @@
 const Hapi = require('hapi');
 require('dotenv').config()
 var mongoose = require('mongoose');
+const jwt = require('jsonwebtoken');
+
+const verify = async function (decoded, request) {
+    let token = request.headers.authorization;
+    let isValid = false;
+    if (token) {
+        await jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+            if (!decoded) {
+                isValid = false
+            } else {
+                request.headers.hyperledgertoken = decoded.hyperledgertoken;
+                isValid = true;
+            }
+        });
+    }
+    return { isValid, credentials: true };
+};
+
 
 const start = async () => {
     const server = await new Hapi.Server({
@@ -13,6 +31,16 @@ const start = async () => {
 
     //registers swagger plugins
     await server.register(require("./config/hapi-plugins"))
+
+    //register, define and and set the default auth scheme
+    await server.auth.strategy('jwt', 'jwt',
+        {
+            key: process.env.JWT_SECRET,          // Never Share your secret key
+            validate: verify         // validate function defined above
+            //verifyOptions: { algorithms: [ 'HS256' ] } // pick a strong algorithm
+        });
+    server.auth.default('jwt');
+
 
     //mongoose 
     mongoose.connect(process.env.MONGODB_URL);
