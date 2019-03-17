@@ -10,7 +10,7 @@ module.exports = [
             description: 'Save Task',
             notes: 'Save Task',
             tags: ['api'],
-            auth: false,
+            auth: 'jwt',
             validate: {
                 headers: Joi.object({
                     'authorization': Joi.string().required()
@@ -34,7 +34,7 @@ module.exports = [
             description: 'Get All Tasks',
             notes: 'Get All Tasks',
             tags: ['api'],
-            auth: false,
+            auth: 'jwt',
             validate: {
                 headers: Joi.object({
                     'authorization': Joi.string().required()
@@ -50,7 +50,7 @@ module.exports = [
             description: 'Get All Tasks by User',
             notes: 'Get All Tasks by User',
             tags: ['api'],
-            auth: false,
+            auth: 'jwt',
             validate: {
                 headers: Joi.object({
                     'authorization': Joi.string().required()
@@ -69,7 +69,7 @@ module.exports = [
             description: 'Update Task',
             notes: 'Update Task',
             tags: ['api'],
-            auth: false,
+            auth: 'jwt',
             validate: {
                 headers: Joi.object({
                     'authorization': Joi.string().required()
@@ -96,7 +96,7 @@ module.exports = [
             description: 'Delete Task',
             notes: 'Delete Task',
             tags: ['api'],
-            auth: false,
+            auth: 'jwt',
             validate: {
                 headers: Joi.object({
                     'authorization': Joi.string().required()
